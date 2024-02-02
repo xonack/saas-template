@@ -36,8 +36,10 @@ const VideoPage = () => {
     const onSubmit = async (values: z.infer<typeof formSchema>) => {    
         try {
             setVideo(undefined)
-            axios.defaults.timeout = 100000;
-            const response = await axios.post("/api/video", values)
+            const axios_config = {
+                timeout: 100 * 1000, // 100 seconds expressed in milliseconds
+              };
+            const response = await axios.post("/api/video", values, axios_config)
             setVideo(response.data[0])
             form.reset()
         } catch(error: any) {
@@ -110,7 +112,7 @@ const VideoPage = () => {
                     </div>
                 )}
                 {!video && !isLoading && (
-                    <Empty label="No music requested." />
+                    <Empty label="No video requested." />
                 )}
                 {video && (
                     <video controls
