@@ -36,6 +36,7 @@ const VideoPage = () => {
     const onSubmit = async (values: z.infer<typeof formSchema>) => {    
         try {
             setVideo(undefined)
+            axios.defaults.timeout = 100000;
             const response = await axios.post("/api/video", values)
             setVideo(response.data[0])
             form.reset()
